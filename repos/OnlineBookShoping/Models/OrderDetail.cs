@@ -11,7 +11,7 @@ namespace OnlineBookShoping.Models
         public int OrderId { get; set; }
 
         [Required] 
-        pubic int BookId { get; set; }
+        public int BookId { get; set; }
         [Required]
         public int Qantity { get; set; }
         [Required]
