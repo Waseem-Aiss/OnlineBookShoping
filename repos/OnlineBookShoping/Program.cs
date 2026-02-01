@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineBookShoping.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlServer(connectionString));
 
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(Options => Options.SignIn.RequireConfirmedAccount=true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI().AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
