@@ -5,7 +5,7 @@
 namespace OnlineBookShoping.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstDbConnection : Migration
+    public partial class DbcontxtReplacewithIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
