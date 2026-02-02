@@ -15,6 +15,16 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+
+// for automatic request.. 
+using (var scope = app.Services.CreateScope())
+{
+    await DbSeeder.AddDefaulData(scope.ServiceProvider);
+}
+
+
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
