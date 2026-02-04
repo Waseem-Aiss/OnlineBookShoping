@@ -1,8 +1,76 @@
-﻿@{
+﻿@model IEnumerable<Book>
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="my-3">
+    
+<form class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Genre</label>
+            <select class="form-select" id="GenreId">
+                <option selected>Choose...</option>
+                <option value="1">Action</option>
+                <option value="2">Horror</option>
+                <option value="3">Romance</option>
+                <option value="3">Science Fiction</option>
+                <option value="3">Thriller</option>
+            </select>
+        </div>
+    
+    
+    
+    <div class="col-12">
+    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+    <div class="input-group">
+      <div class="input-group-text">
+
+      </div>
+      <input type="text" class="form-control" id="sTerm" placeholder="Search by Title">
+    </div>
+  </div>
+
+ 
+
+ 
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+
+
+
+    </form>
+
+</div>
+
+<div class="w-100 d-flex flex-wrap">
+    @foreach (var book in Model)
+    {
+        <div class="card mx-2 mt-4 mb-4 mt-2" style="width: 16rem;">
+            @if(string.IsNullOrEmpty(book.Image))
+            {
+                <img src="C:\Users\USER\source\repos\OnlineBookShoping\wwwroot\Images\No Image.jpg" class="card-img-top" alt="...">
+
+            }
+            else
+            {
+                <img src="C:\Users\USER\source\repos\OnlineBookShoping\wwwroot\Images\book.jpg" class="card-img-top" alt="...">
+            }
+            
+            
+           
+            <div class="card-body  ">
+                <h5 class="card-title">@book.BookName</h5>
+                <p class="card-text">
+                    Genre:@book.GenreName
+                    Author:@book.AuthorName
+                    Price:@book.Price
+                </p>
+                <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+    }
 </div>

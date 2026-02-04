@@ -10,6 +10,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlSer
 
 builder.Services.AddIdentity<IdentityUser,IdentityRole>(Options => Options.SignIn.RequireConfirmedAccount=true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI().AddDefaultTokenProviders();
 
+builder.Services.AddTransient<IHomeRepository, HomeRepository>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
