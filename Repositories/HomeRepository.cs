@@ -13,6 +13,11 @@ namespace OnlineBookShoping.Repositories
         {
            _dbContext = db;
         }
+        public async Task<IEnumerable<Genre>> Genres() {
+        
+        return await _dbContext.Genres.ToListAsync();
+        }
+
         public async Task<IEnumerable<Book>> GetBooks(string sTerm="",int genreId = 0)
         {
             sTerm = sTerm.ToLower();

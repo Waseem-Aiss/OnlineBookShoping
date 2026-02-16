@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookShoping.Models;
+using OnlineBookShoping.Models.DTOs;
 
 namespace OnlineBookShoping.Controllers
 {
@@ -21,8 +22,20 @@ namespace OnlineBookShoping.Controllers
         public async Task<IActionResult> Index(string sTerm="",int genreId =0)
         {
             IEnumerable<Book> books = await _homeRepository.GetBooks(sTerm, genreId);
-            return View(books);
+            IEnumerable<Genre> Genres = await _homeRepository.Genres();
+
+            BookDisplayModel bookModel = new BookDisplayModel
+            {
+                Books = books,
+                Genres = Genres
+            };
+
+
+
+
+            return View(bookModel);
         }
+        
 
         public IActionResult Privacy()
         {
