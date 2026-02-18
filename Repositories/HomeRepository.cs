@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace OnlineBookShoping.Repositories
 {
@@ -18,7 +19,8 @@ namespace OnlineBookShoping.Repositories
         return await _dbContext.Genres.ToListAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetBooks(string sTerm="",int genreId = 0)
+        public async Task<(IEnumerable<Book> books, int totalPages)> GetBooks(string sTerm="",int genreId = 0,
+            int pageSize = 8,int pageNumber =1)
         {
             sTerm = sTerm.ToLower();
 
@@ -36,12 +38,17 @@ namespace OnlineBookShoping.Repositories
                                   Price = Book.Price,
                                   GenreName = Genre.GenreName,
                               };
+
             if(genreId > 0)
             {
                 book = book.Where(a => a.GenreId == genreId);
             }
+            
+            int totalBooks = await book.CountAsync();
+            int totalViewPages = (int)Math.Ceiling((totalBooks / (double)pageSize));
+            var pageData = await book.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return await book.ToListAsync();
+            return (pageData,totalViewPages);
                         
         }
 

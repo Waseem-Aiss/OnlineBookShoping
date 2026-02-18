@@ -14,31 +14,29 @@
                 <option selected>Choose...</option>
                 @foreach (var item in Model.Genres) {
                 
-                    <option value="@item.Id">@item.GenreName</option>
+                    <option value="@item.Id" selected="@(item.Id == Model.genreId)">@item.GenreName</option>
                 }
 
             </select>
         </div>
+       
     
-    
-    
-    <div class="col-12">
+        <div class="col-12">
     <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
     <div class="input-group">
       <div class="input-group-text">
 
       </div>
-      <input type="text" class="form-control" id="sTerm" name="sTerm" placeholder="Search by Title">
+      <input type="text" class="form-control" id="sTerm" name="sTerm" value="@Model.sTerm" placeholder="Search by Title">
     </div>
   </div>
 
  
-
- 
-
   <div class="col-12">
     <button type="submit" class="btn btn-primary">Search</button>
   </div>
+
+       
 
     </form>
 
@@ -70,5 +68,20 @@
                 <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
         </div>
+       
     }
+</div>
+<div class="my-4">
+    <ul class="pagination justify-content-end">
+        @for (int i = 1; i <= Model.totalPages; i++)
+        {
+            <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-sTerm="@Model.sTerm"
+                   asp-route-genreId="@Model.genreId">@i</a>
+            </li>
+        }
+    </ul>
 </div>

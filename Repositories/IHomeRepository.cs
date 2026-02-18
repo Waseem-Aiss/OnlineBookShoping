@@ -2,7 +2,8 @@
 {
     public interface IHomeRepository
     {
-        Task<IEnumerable<Book>> GetBooks(string sTerm = "", int genreId = 0);
+ Task<(IEnumerable<Book> books, int totalPages)> GetBooks(string sTerm = "", int genreId = 0,
+     int pageSize=8,int pageNumber=1);
         Task<IEnumerable<Genre>> Genres();
 
     }

@@ -19,15 +19,20 @@ namespace OnlineBookShoping.Controllers
 
 
 
-        public async Task<IActionResult> Index(string sTerm="",int genreId =0)
+        public async Task<IActionResult> Index(string sTerm="",int genreId =0, int pageNumber = 1)
         {
-            IEnumerable<Book> books = await _homeRepository.GetBooks(sTerm, genreId);
+           var (books , totalPages) = await _homeRepository.GetBooks(sTerm, genreId,8,pageNumber);
             IEnumerable<Genre> Genres = await _homeRepository.Genres();
 
             BookDisplayModel bookModel = new BookDisplayModel
             {
                 Books = books,
-                Genres = Genres
+                Genres = Genres,
+                pageSize = 8,
+                totalPages = totalPages,
+                currentPage = pageNumber,
+                sTerm=sTerm,
+                genreId=genreId
             };
 
 
