@@ -16,9 +16,6 @@ namespace OnlineBookShoping.Controllers
             _homeRepository = homeRepository;
         }
 
-
-
-
         public async Task<IActionResult> Index(string sTerm="",int genreId =0, int pageNumber = 1)
         {
            var (books , totalPages) = await _homeRepository.GetBooks(sTerm, genreId,8,pageNumber);
