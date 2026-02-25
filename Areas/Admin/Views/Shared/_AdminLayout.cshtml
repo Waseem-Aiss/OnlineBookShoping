@@ -1,52 +1,76 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Admin</title>
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <style>
+        /* Sidebar ko full height dene ke liye */
+        body, html {
+            height: 100%;
+        }
 
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> <svg class="bi pe-none me-2" width="40" height="32" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> <span class="fs-4">Sidebar</span> </a> <hr> <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true"><use xlink:href="#home"></use></svg>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                    <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true"><use xlink:href="#speedometer2"></use></svg>
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                    <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true"><use xlink:href="#table"></use></svg>
-                    Orders
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                    <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true"><use xlink:href="#grid"></use></svg>
-                    Products
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                    <svg class="bi pe-none me-2" width="16" height="16" aria-hidden="true"><use xlink:href="#people-circle"></use></svg>
-                    Customers
-                </a>
-            </li>
-        </ul>
-        <hr> <div class="dropdown"> <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2"> <strong>mdo</strong> </a> <ul class="dropdown-menu text-small shadow"> <li><a class="dropdown-item" href="#">New project...</a></li> <li><a class="dropdown-item" href="#">Settings</a></li> <li><a class="dropdown-item" href="#">Profile</a></li> <li><hr class="dropdown-divider"></li> <li><a class="dropdown-item" href="#">Sign out</a></li> </ul> </div>
+    <div class="main-wrapper">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;">
+            <a href="/Admin/Dashboard/Index" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <i class="bi bi-book-half me-2" style="font-size: 2rem;"></i>
+                <span class="fs-4">BookShop Admin</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="/Admin/Dashboard/Index" class="nav-link text-white active">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Genre/Index" class="nav-link text-white">
+                        <i class="bi bi-tags me-2"></i> Genres
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Book/Index" class="nav-link text-white">
+                        <i class="bi bi-book me-2"></i> Books
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Order/Index" class="nav-link text-white">
+                        <i class="bi bi-cart-check me-2"></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/User/Index" class="nav-link text-white">
+                        <i class="bi bi-people me-2"></i> User Management
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <a href="/" class="nav-link text-warning">
+                <i class="bi bi-house-door me-2"></i> Exit to Shop
+            </a>
+        </div>
+
+        <main class="content-area bg-light">
+            @RenderBody()
+        </main>
     </div>
-    <main>
-        @RenderBody()
-    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

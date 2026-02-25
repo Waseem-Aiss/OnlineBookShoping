@@ -1,4 +1,4 @@
-﻿namespace OnlineBookShoping.Repositories
+﻿namespace OnlineBookShoping.Repositories.IRepository
 {
     public interface IHomeRepository
     {

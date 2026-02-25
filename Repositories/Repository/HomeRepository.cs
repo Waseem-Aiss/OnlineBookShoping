@@ -1,8 +1,9 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using OnlineBookShoping.Repositories.IRepository;
 
-namespace OnlineBookShoping.Repositories
+namespace OnlineBookShoping.Repositories.Repository
 {
 
     

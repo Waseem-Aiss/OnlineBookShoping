@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineBookShoping.Data;
 using Microsoft.AspNetCore.Identity;
+using OnlineBookShoping.Repositories.IRepository;
+using OnlineBookShoping.Repositories.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlSer
 builder.Services.AddIdentity<IdentityUser,IdentityRole>(Options => Options.SignIn.RequireConfirmedAccount=true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI().AddDefaultTokenProviders();
 
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
+builder.Services.AddTransient<IGenreRepository, GenreRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

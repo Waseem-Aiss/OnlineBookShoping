@@ -2,17 +2,18 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookShoping.Models;
 using OnlineBookShoping.Models.DTOs;
+using OnlineBookShoping.Repositories.IRepository;
 
 namespace OnlineBookShoping.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
+        public HomeController( IHomeRepository homeRepository)
         {
-            _logger = logger;
+          
             _homeRepository = homeRepository;
         }
 
@@ -32,13 +33,9 @@ namespace OnlineBookShoping.Controllers
                 genreId=genreId
             };
 
-
-
-
             return View(bookModel);
         }
         
-
         public IActionResult Privacy()
         {
             return View();
