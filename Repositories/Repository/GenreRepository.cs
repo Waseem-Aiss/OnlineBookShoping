@@ -25,6 +25,19 @@ namespace OnlineBookShoping.Repositories.Repository
            await _dbContext.SaveChangesAsync();
         }
 
+        public async Task<Genre> GetGenreById(int id)
+        {
+            return await _dbContext.Genres.FindAsync(id);
+           
+        }
+        public async Task UpdateGenre(Genre genre)
+        {
+             _dbContext.Genres.Update(genre);
+        }
 
+        public async Task DeleteGenre(Genre rec)
+        {
+            _dbContext.Genres.Remove(rec);
+        }
     }
 }
