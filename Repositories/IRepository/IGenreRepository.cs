@@ -12,6 +12,7 @@
     Task UpdateGenre(Genre genre);
 
    Task DeleteGenre(Genre rec);
+        Task<Genre> GetGenreWithBooks(int id);
 
     }
 }

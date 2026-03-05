@@ -39,5 +39,12 @@ namespace OnlineBookShoping.Repositories.Repository
         {
             _dbContext.Genres.Remove(rec);
         }
+
+        public async Task<Genre> GetGenreWithBooks(int id)
+        {
+           Genre booksFromDb = await _dbContext.Genres.Include(u => u.Books)
+                .FirstOrDefaultAsync(u  => u.Id == id);
+            return booksFromDb;
+        }
     }
 }

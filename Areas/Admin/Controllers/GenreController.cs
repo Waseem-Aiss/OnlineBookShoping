@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineBookShoping.Controllers;
 using OnlineBookShoping.Repositories.IRepository;
 using OnlineBookShoping.Repositories.Repository;
@@ -6,6 +7,8 @@ using OnlineBookShoping.Repositories.Repository;
 namespace OnlineBookShoping.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
+    [Authorize(Roles = "Admin")]
     public class GenreController : Controller
     {
        private readonly IGenreRepository _genreRepository;
@@ -89,6 +92,7 @@ namespace OnlineBookShoping.Areas.Admin.Controllers
         }
        
         [HttpPost, ActionName("Delete")]
+        
         public async Task<IActionResult> DeleteRec(int Id)
         {       
            Genre recForDel =  await _genreRepository.GetGenreById(Id);
@@ -96,6 +100,14 @@ namespace OnlineBookShoping.Areas.Admin.Controllers
                 await _genreRepository.Save();
             
                 return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id) 
+        {
+            Genre GenreWithBooks = await _genreRepository.GetGenreWithBooks(id);
+       
+            return View(GenreWithBooks);
         }
 
     }

@@ -1,0 +1,42 @@
+﻿@model OnlineBookShoping.Models.Genre
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Books in Genre @Model.GenreName</h1>
+
+<div class="w-100 d-flex flex-wrap">
+   
+    @foreach (var book in Model.Books)
+    {
+        <div class="card mx-2 mt-4 mb-4 mt-2" style="width: 16rem;">
+            @if (string.IsNullOrEmpty(book.Image))
+            {
+                <img src="\Images\NoImage.jpg" class="card-img-top" alt="Image loading Issue">
+
+            }
+            else
+            {
+                <img src="\Images\book.jpg" class="card-img-top" alt="Image Loading Issue">
+            }
+
+
+
+            <div class="card-body  ">
+                <h5 class="card-title">@book.BookName</h5>
+                <p class="card-text">
+                   
+                    Author:@book.AuthorName
+                    Price:@book.Price
+                </p>
+                <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

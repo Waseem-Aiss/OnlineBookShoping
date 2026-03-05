@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<partial name="_LoginPartial" />
 <h1>Index</h1>
 
 <p>
@@ -26,8 +26,8 @@
             </td>
             <td>
                 <a asp-area = "Admin" asp-controller = "Genre" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-area="Admin" asp-controller="Genre" asp-action="Detail" asp-route-id="@item.Id">Details</a> |
+                    <a asp-area="Admin" asp-controller="Genre" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

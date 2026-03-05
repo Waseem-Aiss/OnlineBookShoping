@@ -21,7 +21,7 @@ namespace OnlineBookShoping.Data
                     await context.Database.MigrateAsync();
 
                 }
-                var userMgr = service.GetService<UserManager<IdentityUser>>();
+                var userMgr = service.GetService<UserManager<ApplicationUser>>();
                 var roleMgr = service.GetService<RoleManager<IdentityRole>>();
 
                 var adminRoleExists = await roleMgr.RoleExistsAsync(Roles.Admin.ToString());
@@ -36,16 +36,18 @@ namespace OnlineBookShoping.Data
                     await roleMgr.CreateAsync(new IdentityRole(Roles.User.ToString()));
                 }
 
-                var admin = new IdentityUser
+                var admin = new ApplicationUser
                 {
-                    UserName = "admin",
-                    Email = "waseemaiss784@gmail.com",
+                    UserName = "Masoud_Ismaeel",
+                    Email = "Masoud@gmail.com",
+                    Name = "Masoud Ismaeel",
                     EmailConfirmed = true
+                    
                 };
                 var userInDb = await userMgr.FindByEmailAsync(admin.Email);
                 if (userInDb is null)
                 {
-                    await userMgr.CreateAsync(admin, "Waseem@784");
+                    await userMgr.CreateAsync(admin, "Masoud@784");
                     await userMgr.AddToRoleAsync(admin, Roles.Admin.ToString());
                 }
 
