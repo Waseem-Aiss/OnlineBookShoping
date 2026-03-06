@@ -167,7 +167,7 @@ namespace OnlineBookShoping.Data
             new OrderStatus { StatusId = 6, StatusName = "Refund" }
             };
             await context.OrderStatuses.AddRangeAsync(orderStasus);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
         }
 

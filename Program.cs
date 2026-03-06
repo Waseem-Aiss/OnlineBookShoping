@@ -17,22 +17,15 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>
 
 builder.Services.AddTransient<IHomeRepository, HomeRepository>();
 builder.Services.AddTransient<IGenreRepository, GenreRepository>();
-
+builder.Services.AddTransient<IBookRepository , BookRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
-
-
 // for automatic request.. 
 using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.AddDefaulData(scope.ServiceProvider);
 }
-
-
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -60,6 +53,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 app.MapRazorPages();
-
 
 app.Run();
