@@ -13,10 +13,37 @@ namespace OnlineBookShoping.Repositories.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks()
+       public async Task<(IEnumerable<Book> book, int totalPages)> GetAllBooksAdmin(string sTerm = "", int genreId = 0,
+            int pageSize = 8, int pageNumber = 1)
         {
-            return await _dbContext.Books.Include(b => b.Genre).ToListAsync();
+            var book = from Book in _dbContext.Books
+                       join Genre in _dbContext.Genres
+                       on Book.GenreId equals Genre.Id
+                       where string.IsNullOrWhiteSpace(sTerm) || (Book != null && Book.BookName.ToLower().StartsWith(sTerm))
+                       select new Book
+                       {
+                           id = Book.GenreId,
+                           AuthorName = Book.AuthorName,
+                           BookName = Book.BookName,
+                           GenreId = Book.GenreId,
+                           Price = Book.Price,
+                           GenreName = Genre.GenreName,
+                       };
+            if (genreId > 0)
+            {
+                book = book.Where(s => s.GenreId == genreId);
+            }
+            int totalBooks =await book.CountAsync();
+            int totalViewPages =(int) Math.Ceiling(totalBooks / (double)pageSize);
+            var pageData = await book.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return (pageData, totalViewPages);
         }
-       
+
+       public async Task<IEnumerable<Genre>> Genres()
+        {
+            return await _dbContext.Genres.ToListAsync();
+        }
+
+
     }
 }

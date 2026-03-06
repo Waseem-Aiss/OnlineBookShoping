@@ -1,55 +1,75 @@
-﻿@model IEnumerable<OnlineBookShoping.Models.Book>
+﻿@model BookDisplayModel
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
-<h1>Index</h1>
+<div class="my-3">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuthorName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre.GenreName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Genre</label>
+            <select class="form-select" id="genreId" name="genreId">
+                <option selected>Choose...</option>
+                @foreach (var item in Model.Genres)
+                {
+
+                    <option value="@item.Id" selected="@(item.Id == Model.genreId)">@item.GenreName</option>
+                }
+
+            </select>
+        </div>
+
+
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+            <div class="input-group">
+                <div class="input-group-text">
+                </div>
+                <input type="text" class="form-control" id="sTerm" name="sTerm" value="@Model.sTerm" placeholder="Search by Title">
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+
+
+
+    </form>
+
+</div>
+
+<div class="w-100 d-flex flex-wrap">
+    @foreach (var book in Model.Books)
+    {
+        <div class="container mt-4">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0"><strong>@book.BookName</strong></h6>
+                        <small class="text-muted">Author: @book.AuthorName | Genre: @book.GenreName</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">Price: @book.Price</span>
+                </li>
+            </ul>
+        </div>
+
+    }
+</div>
+<div class="my-4">
+    <ul class="pagination justify-content-end">
+        @for (int i = 1; i <= Model.totalPages; i++)
+        {
+            <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-sTerm="@Model.sTerm"
+                   asp-route-genreId="@Model.genreId">@i</a>
+            </li>
+        }
+    </ul>
+</div>
