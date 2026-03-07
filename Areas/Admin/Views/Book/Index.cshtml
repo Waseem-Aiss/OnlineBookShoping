@@ -4,72 +4,97 @@
 @{
     ViewData["Title"] = "Books";
 }
+<style>
+    .content-area {
+        display: flex;
+        flex-direction: column; /* Vertical alignment */
+        height: 100vh;
+        overflow: hidden; /* Poora area scroll nahi hoga */
+    }
 
-<div class="my-3">
+    .sticky-form-header {
+        background-color: white;
+        padding: 8px 15px;
+        border-bottom: 1px solid #eee;
+        z-index: 1000; /* Taake books iske upar na aayein */
+        flex-shrink: 0;
+    }
 
-    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormSelectPref">Genre</label>
-            <select class="form-select" id="genreId" name="genreId">
-                <option selected>Choose...</option>
-                @foreach (var item in Model.Genres)
-                {
+    .tight-form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-                    <option value="@item.Id" selected="@(item.Id == Model.genreId)">@item.GenreName</option>
-                }
+        .tight-form .form-select,
+        .tight-form .form-control {
+            height: 35px;
+            padding: 2px 10px;
+        }
 
-            </select>
-        </div>
+    .scrollable-books-container {
+        flex-grow: 1; /* Baaqi bachi hui jagah ye le lega */
+        overflow-y: auto; /* Sirf books wala hissa scroll hoga */
+        padding: 20px;
+    }
+</style>
 
+<div class="content-area">
+    <div class="sticky-form-header">
+        <form asp-action="Index" class="tight-form">
+            <div style="width: 200px;">
+                <select class="form-select" id="genreId" name="genreId">
+                    <option selected>Choose...</option>
+                    @foreach (var item in Model.Genres)
+                    {
+                        <option value="@item.Id" selected="@(item.Id == Model.genreId)">@item.GenreName</option>
+                    }
+                </select>
+            </div>
 
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
-            <div class="input-group">
-                <div class="input-group-text">
-                </div>
+            <div style="width: 300px;">
                 <input type="text" class="form-control" id="sTerm" name="sTerm" value="@Model.sTerm" placeholder="Search by Title">
             </div>
-        </div>
 
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        </form>
+    </div>
 
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-
-
-
-    </form>
-
-</div>
-
-<div class="w-100 d-flex flex-wrap">
-    @foreach (var book in Model.Books)
-    {
-        <div class="container mt-4">
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div class="scrollable-books-container">
+        @foreach (var book in Model.Books)
+        {
+            <div class="card mb-2 shadow-sm">
+                <div class="card-body d-flex justify-content-between align-items-center p-2">
                     <div>
                         <h6 class="mb-0"><strong>@book.BookName</strong></h6>
-                        <small class="text-muted">Author: @book.AuthorName | Genre: @book.GenreName</small>
+                        <small class="text-muted">Author: @book.AuthorName | Genre: @book.GenreName | Price: @book.Price</small>
                     </div>
-                    <span class="badge bg-primary rounded-pill">Price: @book.Price</span>
-                </li>
-            </ul>
-        </div>
 
-    }
-</div>
-<div class="my-4">
-    <ul class="pagination justify-content-end">
-        @for (int i = 1; i <= Model.totalPages; i++)
-        {
-            <li class="page-item @(i == Model.currentPage ? "active" : "")">
-                <a class="page-link"
-                   asp-action="Index"
-                   asp-route-pageNumber="@i"
-                   asp-route-sTerm="@Model.sTerm"
-                   asp-route-genreId="@Model.genreId">@i</a>
-            </li>
+                    <div class="text-end">
+                        <a asp-area="Admin" asp-controller="Book" asp-action="Edit" asp-route-id="@book.id">Edit</a> |
+                        <a asp-area="Admin" asp-controller="Book" asp-action="Detail" asp-route-id="@book.id">Detail</a> |
+                        <a asp-area="Admin" asp-controller="Book" asp-action="Delete" asp-route-id="@book.id">Delete</a>
+
+                    </div>
+
+                </div>
+
+            </div>
         }
-    </ul>
+
+    </div>
+
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-end">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i"
+                       asp-route-sTerm="@Model.sTerm" asp-route-genreId="@Model.genreId">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+
 </div>

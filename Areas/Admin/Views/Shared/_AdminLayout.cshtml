@@ -14,10 +14,20 @@
         .main-wrapper {
             display: flex;
             min-height: 100vh;
+            overflow:hidden;
         }
+        .admin-sidebar{
+            width:280px;
+            height:100vh;
+            background-color: #343a40;
+            flex-shrink:0;
+            overflow-y:auto;
+         }
 
         .content-area {
             flex-grow: 1;
+            height:100vh;
+            background-color: #f8f9fa;
             padding: 20px;
             overflow-y: auto;
         }
@@ -26,7 +36,7 @@
 <body>
 
     <div class="main-wrapper">
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;">
+        <div class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;">
             <a href="/Admin/Dashboard/Index" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <i class="bi bi-book-half me-2" style="font-size: 2rem;"></i>
                 <span class="fs-4">BookShop Admin</span>
@@ -34,35 +44,36 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/Admin/Dashboard/Index" class="nav-link text-white active">
+                    <a href="/Admin/Dashboard/Index" class="nav-link text-white @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                        
                         <i class="bi bi-speedometer2 me-2"></i> Dashboard
                     </a>
                 </li>
                 <li>
-                    <a href="/Admin/Genre/Index" class="nav-link text-white">
+                    <a href="/Admin/Genre/Index" class="nav-link text-white @(ViewContext.RouteData.Values["controller"]?.ToString() == "Genre" ? "active":"")">
                         <i class="bi bi-tags me-2"></i> Genres
                     </a>
                 </li>
                 <li>
-                    <a href="/Admin/Book/Index" class="nav-link text-white">
+                    <a href="/Admin/Book/Index" class="nav-link text-white @(ViewContext.RouteData.Values["controller"]?.ToString() == "Book" ? "active" : "")">
+                        
                         <i class="bi bi-book me-2"></i> Books
                     </a>
                 </li>
                 <li>
-                    <a href="/Admin/Order/Index" class="nav-link text-white">
+                    <a href="/Admin/Order/Index" class="nav-link text-white @(ViewContext.RouteData.Values["controller"]?.ToString() == "Order" ? "active" : "")">
+                        
                         <i class="bi bi-cart-check me-2"></i> Orders
                     </a>
                 </li>
                 <li>
-                    <a href="/Admin/User/Index" class="nav-link text-white">
+                    <a href="/Admin/User/Index" class="nav-link text-white @(ViewContext.RouteData.Values["controller"]?.ToString() == "User" ? "active" : "")">
+                        
                         <i class="bi bi-people me-2"></i> User Management
                     </a>
                 </li>
             </ul>
             <hr>
-            <a href="/" class="nav-link text-warning">
-                <i class="bi bi-house-door me-2"></i> Exit to Shop
-            </a>
         </div>
 
         <main class="content-area bg-light">
