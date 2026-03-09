@@ -17,7 +17,7 @@ namespace OnlineBookShoping.Models
         [MaxLength(50)]
         public string? AuthorName { get; set; }
         [Required]
-        [MaxLength(50)]
+        
         public Double Price { get; set; }
         public string? Image { get; set; }
         [Required]

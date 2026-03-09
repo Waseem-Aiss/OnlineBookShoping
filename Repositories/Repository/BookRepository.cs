@@ -22,7 +22,7 @@ namespace OnlineBookShoping.Repositories.Repository
                        where string.IsNullOrWhiteSpace(sTerm) || (Book != null && Book.BookName.ToLower().StartsWith(sTerm))
                        select new Book
                        {
-                           id = Book.GenreId,
+                           id = Book.id,
                            AuthorName = Book.AuthorName,
                            BookName = Book.BookName,
                            GenreId = Book.GenreId,
@@ -43,6 +43,38 @@ namespace OnlineBookShoping.Repositories.Repository
         {
             return await _dbContext.Genres.ToListAsync();
         }
+
+        public async Task<Book> BookEdit(int bookId)
+        {
+           Book resBook =  await _dbContext.Books.FindAsync(bookId);
+            return resBook;
+
+        }
+
+        public async Task AddEditedBook(Book book)
+        {
+            _dbContext.Books.Update(book);
+            await _dbContext.SaveChangesAsync();
+        }
+    public async Task DeletBookbyId(int id)
+        {
+            Book delBook = await _dbContext.Books.FindAsync(id);
+           
+          _dbContext.Books.Remove(delBook);
+          await  _dbContext.SaveChangesAsync();
+
+        }
+        public Book BookDetail(int id)
+        {
+            Book foundBook =  _dbContext.Books.Include(b => b.Genre).FirstOrDefault(b=>b.id == id) ;
+
+
+            return (foundBook);
+        }
+
+
+
+
 
 
     }

@@ -39,6 +39,28 @@
     }
 </style>
 
+@section Scripts
+{
+    <script>
+        function confirmDelete(event)
+        {
+            let result = confirm('Do you really want do delete this Record ?? ');
+            if(!result)
+            {
+               event.preventDefault();
+                return false;
+            }
+
+                return true;
+
+        }
+
+
+    </script>
+}
+
+
+
 <div class="content-area">
     <div class="sticky-form-header">
         <form asp-action="Index" class="tight-form">
@@ -72,8 +94,9 @@
 
                     <div class="text-end">
                         <a asp-area="Admin" asp-controller="Book" asp-action="Edit" asp-route-id="@book.id">Edit</a> |
-                        <a asp-area="Admin" asp-controller="Book" asp-action="Detail" asp-route-id="@book.id">Detail</a> |
-                        <a asp-area="Admin" asp-controller="Book" asp-action="Delete" asp-route-id="@book.id">Delete</a>
+                        <a asp-area="Admin" asp-controller="Book" asp-action="BookDetail" asp-route-id="@book.id">Detail</a> |
+                        <a asp-area="Admin" asp-controller="Book" asp-action="DeletBookbyId" asp-route-id="@book.id"
+                           onclick="return confirmDelete(event)">Delete</a>
 
                     </div>
 

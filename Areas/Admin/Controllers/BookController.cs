@@ -33,5 +33,33 @@ namespace OnlineBookShoping.Areas.Admin.Controllers
             return View(bookModel);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            Book resBook = await _bookRepository.BookEdit(id);
+            return View(resBook);
+        }
+
+       
+        [HttpPost]
+        public async Task<IActionResult> Edit(Book book)
+        {
+
+          await _bookRepository.AddEditedBook(book);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeletBookbyId(int id)
+        {
+            await _bookRepository.DeletBookbyId(id);
+            return RedirectToAction("Index");
+        }
+       public  IActionResult BookDetail(int id)
+        {
+            Book detBook =  _bookRepository.BookDetail(id);
+            
+            return View(detBook);
+        }
+
+
     }
 }
